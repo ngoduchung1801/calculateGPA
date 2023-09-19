@@ -40,17 +40,31 @@ def convert_grade10_to_letter(grade):
         return 'F'
 
 
+def printlist(subjects):
+    print(f"{'STT':<15} {'Môn học':<40} {'Số tín chỉ':<20} {'Điểm hệ 10':<15} {'Điểm chữ':<15} {'Điểm hệ 4':<15}")
+    line = 0
+    for subject in subjects:
+        line += 1
+        name = subject[0]
+        credit = subject[1]
+        grade = subject[2]
+        grade_letter = convert_grade10_to_letter(grade)
+        grade_4 = convert_letter_to_grade4(grade_letter)
+        credit_points = convert_letter_to_grade4(convert_grade10_to_letter(grade)) * credit
+        print(f"{line:<10} {subject[0]:<50} {subject[1]:<18} {subject[2]:<15} {grade_letter:<15} {grade_4:<15}")
+
+
 def calculate_gpa(subjects):
     total_credit = 0
     total_points = 0
 
     for subject in subjects:
         name = subject[0]
-        credits = subject[1]
+        credit = subject[1]
         grade = subject[2]
 
-        credit_points = convert_letter_to_grade4(convert_grade10_to_letter(grade)) * credits
-        total_credit += credits
+        credit_points = convert_letter_to_grade4(convert_grade10_to_letter(grade)) * credit
+        total_credit += credit
         total_points += credit_points
 
     gpa = total_points / total_credit
@@ -61,23 +75,23 @@ def main():
     subjects = []
     total_credit = 0
 
-    with open('monhoc.text', 'r') as rf:
+    with open('monhoc.txt', 'r', encoding='utf-8') as rf:
         content = rf.readline()
         while content:
             x = content.split(" - ")
-            print(x)
             name = x[0]
             grade = float(x[1])
-            credits = int(x[2])
-            total_credit += credits
-            subjects.append((name, credits, grade))
+            credit = int(x[2])
+            total_credit += credit
+            subjects.append((name, credit, grade))
             content = rf.readline()
 
     gpa = calculate_gpa(subjects)
-    print("Điểm chung bình tích luỹ hệ 4:", "%.3f" % gpa)
+    printlist(subjects)
+    print("\nĐiểm chung bình tích luỹ hệ 4:", "%.3f" % gpa)
     print("Tổng tín chỉ:", total_credit)
-    print("Nhập phím bấm kì để thoát...")
-    input()
+    print("Nhấn phím bấm kì để thoát...")
+    # input()
 
 
 if __name__ == "__main__":
