@@ -45,12 +45,8 @@ def printlist(subjects):
     line = 0
     for subject in subjects:
         line += 1
-        name = subject[0]
-        credit = subject[1]
-        grade = subject[2]
-        grade_letter = convert_grade10_to_letter(grade)
+        grade_letter = convert_grade10_to_letter(subject[2])
         grade_4 = convert_letter_to_grade4(grade_letter)
-        credit_points = convert_letter_to_grade4(convert_grade10_to_letter(grade)) * credit
         print(f"{line:<10} {subject[0]:<50} {subject[1]:<18} {subject[2]:<15} {grade_letter:<15} {grade_4:<15}")
 
 
@@ -88,10 +84,10 @@ def main():
 
     gpa = calculate_gpa(subjects)
     printlist(subjects)
-    print("\nĐiểm chung bình tích luỹ hệ 4:", "%.3f" % gpa)
+    print("\nĐiểm trung bình tích luỹ hệ 4:", "%.3f" % gpa)
     print("Tổng tín chỉ:", total_credit)
     print("Nhấn phím bấm kì để thoát...")
-    # input()
+    input()
 
 
 if __name__ == "__main__":
